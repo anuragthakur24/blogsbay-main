@@ -1,0 +1,115 @@
+import { SignupInput } from "@anuragthakur24/medium-common-zod";
+import axios from "axios";
+import { ChangeEvent, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
+import { motion } from "framer-motion";
+
+export const Auth = () => {
+    const navigate = useNavigate();
+    const [postInputs, setPostInputs] = useState<SignupInput>({ name: "", username: "", password: "" });
+    const [isLoading, setIsLoading] = useState(false);
+    const [emailError, setEmailError] = useState<string | null>(null);
+    const [signupError, setSignupError] = useState<string | null>(null);
+
+    // Function to handle signup request
+    async function sendRequest() {
+        setIsLoading(true);
+        setEmailError(null);
+        setSignupError(null);
+        try {
+            const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs);
+            localStorage.setItem("token", res.data.jwt);
+            navigate("/blogs");
+        } catch (e: any) {
+            if (e.response?.data?.message === "Username already exists") {
+                setEmailError("Username already exists");
+            } else {
+                setSignupError("Signup Failed. Please try again.");
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    return (
+        <motion.div className="relative w-full max-w-lg p-6 md:p-8 bg-[#1e293b] rounded-2xl shadow-lg text-white mx-auto"
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+
+            {/* About Link */}
+            <Link to={'/about'}>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"
+                    className="size-6 ml-auto text-indigo-200 transition duration-300 hover:scale-110 hover:text-indigo-400">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+                </svg>
+            </Link>
+
+            {/* Loading Bar Animation */}
+            {isLoading && (
+                <motion.div className="fixed top-0 left-0 w-full h-1 bg-indigo-500 z-50"
+                    initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 1.5, ease: "easeInOut" }}
+                />
+            )}
+
+            {/* Header Section */}
+            <h1 className="text-4xl font-extrabold text-indigo-400 text-center">WordFlow</h1>
+            <h2 className="text-xl font-semibold mt-1 text-gray-200 text-center">Create an Account</h2>
+
+            {/* Sign-in Redirect */}
+            <p className="text-gray-400 text-sm mt-3 text-center"> Already have an account?{" "}
+                <Link to="/signin" className="text-indigo-500 font-semibold hover:underline">Sign in</Link>
+            </p>
+
+            {/* Signup Form */}
+            <div className="mt-5 space-y-5">
+                <LabelledInput label="Name" placeholder="Enter your name" onChange={(e) => setPostInputs({ ...postInputs, name: e.target.value })} />
+                <div className="space-y-1">
+                    <LabelledInput label="Email" placeholder="example@gmail.com" onChange={(e) => setPostInputs({ ...postInputs, username: e.target.value })} />
+                    {emailError && (<p className="text-red-500 text-sm mt-1">{emailError}</p>)}
+                </div>
+                <LabelledInput label="Password" type="password" placeholder="********" onChange={(e) => setPostInputs({ ...postInputs, password: e.target.value })} />
+            </div>
+
+            {/* Signup Error Message */}
+            {signupError && (<p className="text-red-500 text-sm mt-3">{signupError}</p>)}
+
+            {/* Signup Button */}
+            <motion.button
+                onClick={sendRequest}
+                className="w-full mt-6 py-3 text-lg bg-indigo-600 hover:bg-indigo-700 focus:outline focus:outline-indigo-400 font-semibold rounded-xl shadow-md transition duration-300 flex items-center justify-center"
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.96 }} disabled={isLoading}
+                style={{ cursor: isLoading ? 'not-allowed' : 'pointer' }}>
+
+                {/* Loading Spinner */}
+                {isLoading && (
+                    <svg className="animate-spin size-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 16 0h-2a6 6 0 1 0-12 0H4z"></path>
+                    </svg>
+                )}
+                Sign Up
+            </motion.button>
+        </motion.div>
+    );
+};
+
+// Input Component with Label
+interface LabelledInputType {
+    label: string;
+    placeholder: string;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    type?: string;
+}
+
+export function LabelledInput({ label, placeholder, onChange, type }: LabelledInputType) {
+    return (
+        <motion.div className="space-y-1">
+            <label className="block text-sm font-semibold text-indigo-300">{label}</label>
+            <input
+                onChange={onChange}
+                className="w-full px-4 py-3 bg-[#334155] rounded-lg focus:ring-2 focus:ring-indigo-400 focus:outline-none text-white placeholder-gray-400"
+                type={type || "text"} placeholder={placeholder} required
+            />
+        </motion.div>
+    );
+}
