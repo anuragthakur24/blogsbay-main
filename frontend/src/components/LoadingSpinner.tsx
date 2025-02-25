@@ -9,8 +9,8 @@ export const LoadingSpinner = () => {
         <div className="relative w-full h-full rounded-lg bg-[#1a377c] flex items-center justify-center shadow-xl">
           <svg width="100%" height="100%" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" fill="none">
             <rect width="256" height="256" rx="48" fill="none" />
-            <text x="43" y="153" fontFamily="Arial, sans-serif" fontSize="100" fontWeight="900" fill="#1482ff">W</text>
-            <text x="140" y="153" fontFamily="Arial, sans-serif" fontSize="100" fontWeight="900" fill="#5180ff">F</text>
+            <text x="43" y="153" fontFamily="Arial, sans-serif" fontSize="105" fontWeight="900" fill="#1482ff">W</text>
+            <text x="143" y="153" fontFamily="Arial, sans-serif" fontSize="105" fontWeight="900" fill="#5180ff">F</text>
             <path d="M75 170 Q128 205 171 170" stroke="#5180ff" strokeWidth="8" strokeLinecap="round" fill="none" />
             <circle cx="171" cy="170" r="8" fill="#1482ff" />
           </svg>
