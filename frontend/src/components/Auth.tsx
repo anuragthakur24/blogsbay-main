@@ -23,7 +23,7 @@ export const Auth = () => {
             navigate("/blogs");
         } catch (e: any) {
             if (e.response?.data?.message === "Username already exists") {
-                setEmailError("Username already exists");
+                setEmailError("User already exists");
             } else {
                 setSignupError("Signup Failed. Please try again.");
             }
@@ -64,7 +64,7 @@ export const Auth = () => {
             <div className="mt-5 space-y-5">
                 <LabelledInput label="Name" placeholder="Enter your name" onChange={(e) => setPostInputs({ ...postInputs, name: e.target.value })} />
                 <div className="space-y-1">
-                    <LabelledInput label="Email" placeholder="example@gmail.com" onChange={(e) => setPostInputs({ ...postInputs, username: e.target.value })} />
+                    <LabelledInput label="Email" placeholder="anyname@gmail.com" onChange={(e) => setPostInputs({ ...postInputs, username: e.target.value })} />
                     {emailError && (<p className="text-red-500 text-sm mt-1">{emailError}</p>)}
                 </div>
                 <LabelledInput label="Password" type="password" placeholder="********" onChange={(e) => setPostInputs({ ...postInputs, password: e.target.value })} />
