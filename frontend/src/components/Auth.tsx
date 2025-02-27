@@ -89,6 +89,13 @@ export const Auth = () => {
                 )}
                 Sign Up
             </motion.button>
+
+            {/* About Us */}
+            <motion.div className="mt-4 text-center text-xs text-gray-400"
+                initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+                <p>© 2025 WordFlow. All rights reserved.</p>
+                <Link to="/about" className="text-indigo-400 hover:underline">About Us</Link>
+            </motion.div>
         </motion.div>
     );
 };

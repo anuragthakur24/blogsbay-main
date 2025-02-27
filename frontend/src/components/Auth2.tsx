@@ -62,7 +62,7 @@ export const Auth2 = () => {
 
             {/* Input Fields */}
             <div className="mt-5 space-y-5">
-                <LabelledInput label="Email" placeholder="anyname@gmail.com"
+                <LabelledInput label="Email" placeholder="example@gmail.com"
                     onChange={(e) => setPostInputs({ ...postInputs, username: e.target.value })} />
                 {usernameError && <p className="text-red-500 text-sm">{usernameError}</p>}
 
