@@ -39,7 +39,7 @@ export const AppBar = () => {
                     
                     {/* Logo */}
                     <Link to="/blogs" className="text-2xl sm:text-3xl font-extrabold text-indigo-400 tracking-wide hover:text-indigo-300 transition duration-300">
-                        WordFlow
+                    BlogsBay
                     </Link>
 
                     {/* Desktop Navigation */}

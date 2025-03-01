@@ -52,11 +52,10 @@ export const Auth = () => {
             )}
 
             {/* Header Section */}
-            <h1 className="text-4xl font-extrabold text-indigo-400 text-center">WordFlow</h1>
-            <h2 className="text-xl font-semibold mt-1 text-gray-200 text-center">Create an Account</h2>
+            <h1 className="text-4xl font-extrabold text-indigo-400 text-center">BlogsBay</h1>
 
             {/* Sign-in Redirect */}
-            <p className="text-gray-400 text-sm mt-3 text-center"> Already have an account?{" "}
+            <p className="text-gray-400 text-sm mt-2 text-center"> Already have an account?{" "}
                 <Link to="/signin" className="text-indigo-500 font-semibold hover:underline">Sign in</Link>
             </p>
 
@@ -64,7 +63,7 @@ export const Auth = () => {
             <div className="mt-5 space-y-5">
                 <LabelledInput label="Name" placeholder="Enter your name" onChange={(e) => setPostInputs({ ...postInputs, name: e.target.value })} />
                 <div className="space-y-1">
-                    <LabelledInput label="Email" placeholder="Enter any email (existing or new)" onChange={(e) => setPostInputs({ ...postInputs, username: e.target.value })} />
+                    <LabelledInput label="Email" placeholder="Enter any email (even non-existing)" onChange={(e) => setPostInputs({ ...postInputs, username: e.target.value })} />
                     {emailError && (<p className="text-red-500 text-sm mt-1">{emailError}</p>)}
                 </div>
                 <LabelledInput label="Password" type="password" placeholder="********" onChange={(e) => setPostInputs({ ...postInputs, password: e.target.value })} />
@@ -93,7 +92,7 @@ export const Auth = () => {
             {/* About Us */}
             <motion.div className="mt-4 text-center text-xs text-gray-400"
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                <p>© 2025 WordFlow. All rights reserved.</p>
+                <p>© 2025 BlogsBay. All rights reserved.</p>
                 <Link to="/about" className="text-indigo-400 hover:underline">About Us</Link>
             </motion.div>
         </motion.div>

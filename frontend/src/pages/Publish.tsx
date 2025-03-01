@@ -59,7 +59,7 @@ export const Publish = () => {
                         <input
                             onChange={(e) => setTitle(e.target.value)}
                             type="text"
-                            className="w-full p-3 bg-[#1e2b40] border border-[#2e3978] text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400"
+                            className="w-full p-3 bg-[#1e2b40] border border-[#2e3978] text-gray-200 rounded-lg focus:outline-none placeholder-gray-400"
                             placeholder="Enter blog title..."
                         />
                         
@@ -124,7 +124,7 @@ function TextEditor({ onChange }: { onChange: (e: ChangeEvent<HTMLTextAreaElemen
             <textarea
                 onChange={onChange}
                 rows={8}
-                className="w-full p-3 bg-[#1e2b40] border border-[#2e3978] text-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-400 resize-none"
+                className="w-full p-3 bg-[#1e2b40] border border-[#2e3978] text-gray-200 rounded-lg focus:outline-none placeholder-gray-400 resize-none"
                 placeholder="Write an article..."
                 required
             />

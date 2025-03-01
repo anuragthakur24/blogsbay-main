@@ -52,11 +52,10 @@ export const Auth2 = () => {
             )}
 
             {/* Title */}
-            <h1 className="text-4xl font-extrabold text-indigo-400 text-center">WordFlow</h1>
-            <h2 className="text-xl font-semibold mt-1 text-gray-200 text-center">Welcome Back</h2>
+            <h1 className="text-4xl font-extrabold text-indigo-400 text-center">BlogsBay</h1>
 
             {/* Signup Link */}
-            <p className="text-gray-400 text-sm mt-3 text-center">
+            <p className="text-gray-400 text-sm mt-2 text-center">
                 Don't have an account? <Link to="/signup" className="text-indigo-500 font-semibold hover:underline">Sign up</Link>
             </p>
 
@@ -89,7 +88,7 @@ export const Auth2 = () => {
             {/* About Us */}
             <motion.div className="mt-4 text-center text-xs text-gray-400"
                 initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                <p>© 2025 WordFlow. All rights reserved.</p>
+                <p>© 2025 BlogsBay. All rights reserved.</p>
                 <Link to="/about" className="text-indigo-400 hover:underline">About Us</Link>
             </motion.div>
         </motion.div>

@@ -99,7 +99,7 @@ export const Edit = ({ blog }: { blog: Blog }) => {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="Title"
-                            className="bg-[#1e2b40] border border-[#2e3978] text-gray-300 rounded-lg w-full p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="bg-[#1e2b40] border border-[#2e3978] text-gray-300 rounded-lg w-full p-3 focus:outline-none"
                         />
                         
                         {/* Content Input */}
@@ -107,7 +107,7 @@ export const Edit = ({ blog }: { blog: Blog }) => {
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                             placeholder="Content"
-                            className="border border-[#2e3978] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 block w-full text-gray-300 bg-[#1e2b40] p-3 h-56 mt-4 resize-none"
+                            className="border border-[#2e3978] rounded-lg focus:outline-none block w-full text-gray-300 bg-[#1e2b40] p-3 h-56 mt-4 resize-none"
                         />
 
                         {/* Action Buttons */}
