@@ -41,7 +41,7 @@ export const AboutUs = () => {
                             <div className="mt-6 flex items-center space-x-4">
                                 <img src="/me.jpg" alt="Anurag Thakur" className="w-20 h-20 rounded-full border border-indigo-500" />
                                 <a
-                                    href="https://github.com/anuragthakur24/wordflow-main"
+                                    href="https://github.com/anuragthakur24/blogsbay-main"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="text-indigo-400 font-semibold hover:underline"
