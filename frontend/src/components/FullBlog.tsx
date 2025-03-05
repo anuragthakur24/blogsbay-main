@@ -140,7 +140,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                                             transition={{ duration: 0.5 }}
                                             className="absolute left-0 right-0 mt-2 text-red-500 text-sm text-center flex justify-center lg:justify-end whitespace-nowrap"
                                         >
-                                            Only the owner of this blog can make edits.
+                                            Only the blog owner has permission to edit.
                                         </motion.div>
                                     )}
                                 </AnimatePresence>
