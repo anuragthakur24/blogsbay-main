@@ -4,13 +4,13 @@ A modern blogging platform where users can **create, read, update, and delete (C
 
 ## 🚀 Features  
 - 📝 **Full CRUD support** for blog posts  
+- 🏠 **Profile & Settings**: Manage blogs, info, password & account.  
 - 👍👎 **User interaction** via likes and dislikes  
 - 🔐 **JWT-based authentication** for secure access  
 - ⚡ **Optimized performance** with **Cloudflare Workers** as the backend  
 - ✅ **Schema validation** using **Zod**  
 - 💾 **Efficient database handling** with **Prisma & Postgres** (with connection pooling)  
 - 🛠️ **Strongly typed codebase** with **TypeScript**  
-- 🏠 **User Profile & Settings** interface where users can see their blogs, contact info, and update their password, name, and username  
 
 ## 🛠️ Tech Stack  
 - **Frontend:** React + TypeScript  
