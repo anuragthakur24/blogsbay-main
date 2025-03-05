@@ -6,6 +6,9 @@ import { Blogs } from './pages/Blogs'
 import { Publish } from './pages/Publish'
 import { Update } from './pages/Update'
 import { AboutUs } from './pages/About'
+import { Profile } from './pages/Profile'
+import { Settings } from './pages/Settings'
+import { DeleteAccount } from './components/Delete'
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
         <Route path='/publish' element={<Publish />} />
         <Route path='/edit/:id' element={<Update />} />
         <Route path='/about' element={<AboutUs />} />
+        <Route path='/profile' element={<Profile />} />
+        <Route path='/settings' element={<Settings />} />
+        <Route path='/delete' element={<DeleteAccount />} />
       </Routes>
     </BrowserRouter>
   )

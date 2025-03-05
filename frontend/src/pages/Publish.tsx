@@ -5,6 +5,7 @@ import { AppBar } from "../components/AppBar";
 import { BACKEND_URL } from "../config";
 import { useBlogs } from "../Hooks";
 import { LoadingSpinner } from "../components/LoadingSpinner";
+import { motion, AnimatePresence } from "framer-motion";
 
 export const Publish = () => {
     const [title, setTitle] = useState("");
@@ -13,21 +14,12 @@ export const Publish = () => {
     const navigate = useNavigate();
     const { loading } = useBlogs();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [fadeOut, setFadeOut] = useState(false);
 
-    // Handle automatic fade-out of error messages
+    // Automatically remove error message after 3 seconds
     useEffect(() => {
         if (errorMessage) {
-            const fadeTimer = setTimeout(() => setFadeOut(true), 2500);
-            const removeTimer = setTimeout(() => {
-                setErrorMessage(null);
-                setFadeOut(false);
-            }, 3000);
-
-            return () => {
-                clearTimeout(fadeTimer);
-                clearTimeout(removeTimer);
-            };
+            const timer = setTimeout(() => setErrorMessage(null), 3000);
+            return () => clearTimeout(timer);
         }
     }, [errorMessage]);
 
@@ -46,15 +38,39 @@ export const Publish = () => {
         <div className="min-h-screen bg-[#0f172a] text-gray-200">
             <AppBar />
             <div className="flex justify-center pt-20 lg:pt-24 px-4">
+                {/* Main container */}
                 <div className="w-full max-w-3xl space-y-6 p-4 sm:p-5 lg:p-7 bg-[#15203a] rounded-xl">
-                    <div className="w-full max-w-3xl bg-[#23324a] backdrop-blur-md p-5 sm:p-8 rounded-xl shadow-lg animate-fadeIn">
-                        {/* Error message display */}
-                        {errorMessage && (
-                            <div className={`bg-red-600 text-white text-sm p-3 rounded-lg mb-4 transition-all duration-500 ${fadeOut ? "opacity-0 translate-y-2" : "opacity-100"}`}>
-                                {errorMessage}
-                            </div>
-                        )}
-                        
+                    {/* Inner card with sliding effect */}
+                    <motion.div
+                        initial={{ x: -60, opacity: 0 }}
+                        animate={{ x: 0, opacity: 1 }}
+                        transition={{ type: "spring", stiffness: 90, damping: 20 }}
+                        className="w-full max-w-3xl bg-[#23324a] backdrop-blur-md p-5 sm:p-8 rounded-xl shadow-lg"
+                    >
+                        {/* Page heading and description */}
+                        <div className="mb-7 mt-1 text-center">
+                            <h1 className="text-2xl md:text-3xl font-bold">Publish Blog</h1>
+                            <p className="text-xs md:text-sm text-gray-400 mt-1">
+                            Share your insights, news, or stories with our community.
+                            </p>
+                        </div>
+
+                        {/* Error message */}
+                        <AnimatePresence>
+                            {errorMessage && (
+                                <motion.div
+                                    key="errorMessage"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.5 }}
+                                    className="bg-red-600 text-white text-sm p-3 rounded-lg mb-4"
+                                >
+                                    {errorMessage}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+
                         {/* Title input */}
                         <input
                             onChange={(e) => setTitle(e.target.value)}
@@ -62,10 +78,10 @@ export const Publish = () => {
                             className="w-full p-3 bg-[#1e2b40] border border-[#2e3978] text-gray-200 rounded-lg focus:outline-none placeholder-gray-400"
                             placeholder="Enter blog title..."
                         />
-                        
+
                         {/* Content editor */}
                         <TextEditor onChange={(e) => setContent(e.target.value)} />
-                        
+
                         {/* Publish button */}
                         <button
                             onClick={async () => {
@@ -89,28 +105,49 @@ export const Publish = () => {
                                 }
                             }}
                             disabled={isPublishing}
-                            className={`mt-4 w-full py-3 font-semibold rounded-lg shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 flex items-center justify-center space-x-2 ${
-                                isPublishing ? " hover:bg-blue-800 cursor-not-allowed" : "bg-blue-700 hover:bg-blue-800 text-white"
-                            }`}
+                            className={`mt-4 w-full py-3 font-semibold rounded-lg shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 flex items-center justify-center space-x-2 ${isPublishing
+                                ? "bg-blue-800 hover:bg-blue-800 cursor-not-allowed"
+                                : "bg-blue-700 hover:bg-blue-800 text-white"
+                                }`}
                         >
                             {isPublishing ? (
                                 <>
-                                    <svg className="animate-spin size-5 mr-1" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <svg
+                                        className="animate-spin size-5 mr-1"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 0 1 16 0h-2a6 6 0 1 0-12 0H4z"></path>
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 0 1 16 0h-2a6 6 0 1 0-12 0H4z"
+                                        ></path>
                                     </svg>
                                     <span>Publishing...</span>
                                 </>
                             ) : (
                                 <>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12l18-9-9 18-2.5-6.5L3 12z" />
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        strokeWidth="1.5"
+                                        stroke="currentColor"
+                                        className="w-6 h-6"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            d="M3 12l18-9-9 18-2.5-6.5L3 12z"
+                                        />
                                     </svg>
                                     <span>Publish</span>
                                 </>
                             )}
                         </button>
-                    </div>
+                    </motion.div>
                 </div>
             </div>
         </div>

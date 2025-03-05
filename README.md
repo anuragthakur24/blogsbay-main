@@ -10,6 +10,7 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - ✅ **Schema validation** using **Zod**  
 - 💾 **Efficient database handling** with **Prisma & Postgres** (with connection pooling)  
 - 🛠️ **Strongly typed codebase** with **TypeScript**  
+- 🏠 **User Profile & Settings** interface where users can see their blogs, contact info, and update their password, name, and username  
 
 ## 🛠️ Tech Stack  
 - **Frontend:** React + TypeScript  

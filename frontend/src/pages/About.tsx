@@ -1,11 +1,11 @@
-import { AppBar2 } from "../components/AppBar2";
+import { AppBar } from "../components/AppBar";
 import { motion } from "framer-motion";
 
 export const AboutUs = () => {
     return (
         <div className="bg-[#0f172a] min-h-screen text-gray-200">
             {/* AppBar for navigation */}
-            <AppBar2 />
+            <AppBar />
 
             <div className="flex justify-center pt-20 lg:pt-24 px-4">
                 <div className="w-full max-w-6xl space-y-6 p-4 sm:p-5 lg:p-7 bg-[#15203a] rounded-xl">

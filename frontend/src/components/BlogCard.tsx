@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-interface BlogCardProps {
+export interface BlogCardProps {
     title: string;
     content: string;
     authorName: string;
@@ -61,7 +61,7 @@ export function Circle() {
 export function Avatar({ name, size = "small" }: { name: string; size: "small" | "big" }) {
     return (
         <div className={`relative inline-flex items-center justify-center overflow-hidden bg-[#1b2941] rounded-full 
-            ${size === "small" ? "w-9 h-9" : "w-12 h-12"}`}
+            ${size === "small" ? "w-9 h-9" : "w-14 h-14"}`}
         >
             <span className={`${size === "small" ? "text-sm" : "text-lg"} font-serif text-white`}>
                 {name[0].toUpperCase()}

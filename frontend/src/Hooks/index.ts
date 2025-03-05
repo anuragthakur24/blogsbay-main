@@ -13,6 +13,7 @@ export interface Blog {
     likeCount: number;
     dislikeCount: number;
     [key: string]: any; // Allow additional properties
+
 }
 
 // Hook to fetch a single blog by ID
@@ -59,7 +60,7 @@ export const useBlogs = () => {
 // Hook to fetch formatted publication dates for blogs
 export const useDate = () => {
     const [dates, setDates] = useState<Record<string, string>>({});
-    
+
     useEffect(() => {
         axios.get(`${BACKEND_URL}/api/v1/blog/bulk`, {
             headers: { Authorization: localStorage.getItem("token") || "" }
@@ -79,9 +80,9 @@ export const useDate = () => {
             console.error("Error fetching dates:", error);
         });
     }, []);
-    
+
     return { dates };
-}; 
+};
 
 // Hook to handle like/dislike functionality
 export function useLikeDislike(blogId: string) {
@@ -154,3 +155,131 @@ export function useLikeDislike(blogId: string) {
 
     return { isLiked, isDisliked, toggleLike, toggleDislike, isLoading, isProcessingLike, isProcessingDislike };
 }
+
+interface User {
+    name: string;
+    username: string;
+}
+
+// Hook to fetch user profile details
+export const useUserProfile = () => {
+    const [loading, setLoading] = useState(true);
+    const [user, setUser] = useState<User | null>(null);
+
+    useEffect(() => {
+        axios
+            .get(`${BACKEND_URL}/api/v1/user/profile`, {
+                headers: { Authorization: `${localStorage.getItem("token") || ""}` },
+            })
+            .then((res) => {
+                setUser(res.data.user);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Error fetching user profile:", err);
+                setLoading(false);
+            });
+    }, []);
+
+    return { loading, user };
+};
+
+
+// Hook to change user account settings
+interface UpdateSettingsData {
+    name?: string;
+    username?: string;
+    password?: string;
+}
+
+interface UserSettings {
+    name: string;
+    username: string;
+}
+
+export const useSettings = () => {
+    const [updateLoading, setUpdateLoading] = useState(false);
+    const [settingsLoading, setSettingsLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<boolean>(false);
+    const [settings, setSettings] = useState<UserSettings>({ name: "", username: "" });
+
+    // Fetch user profile data to pre-populate the settings form
+    useEffect(() => {
+        const token = localStorage.getItem("token") || "";
+        axios
+            .get(`${BACKEND_URL}/api/v1/user/profile`, {
+                headers: { Authorization: token },
+            })
+            .then((res) => {
+                const user = res.data.user;
+                setSettings({
+                    name: user.name,
+                    username: user.username, // or user.email if needed
+                });
+                setSettingsLoading(false);
+            })
+            .catch((err) => {
+                console.error("Error fetching user settings:", err);
+            });
+    }, []);
+
+    const updateSettings = async (data: UpdateSettingsData) => {
+        setUpdateLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const token = localStorage.getItem("token") || "";
+            await axios.put(`${BACKEND_URL}/api/v1/user/setting`, data, {
+                headers: { Authorization: token },
+            });
+            setSuccess(true);
+            // Update the local settings state so the form reflects the changes immediately
+            setSettings((prev) => ({ ...prev, ...data }));
+        } catch (err) {
+            const errorMessage =
+                axios.isAxiosError(err) && err.response?.data?.message
+                    ? err.response.data.message
+                    : "Failed to update settings";
+            setError(errorMessage);
+        } finally {
+            setUpdateLoading(false);
+        }
+    };
+
+    return { updateSettings, updateLoading, settingsLoading, error, success, settings };
+};
+
+// Hook to delete user 
+export const useDeleteUser = () => {
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState(false);
+
+    const deleteUser = async () => {
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
+
+        try {
+            const token = localStorage.getItem("token") || "";
+            const response = await axios.delete(`${BACKEND_URL}/api/v1/user/delete`, {
+                headers: { Authorization: token },
+            });
+            setSuccess(true);
+            return response.data;
+        } catch (err: any) {
+            if (axios.isAxiosError(err)) {
+                setError(err.response?.data?.message || "Failed to delete user");
+            } else {
+                setError("Failed to delete user");
+            }
+            return null;
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { deleteUser, loading, error, success };
+};
