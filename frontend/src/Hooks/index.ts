@@ -9,7 +9,9 @@ export interface Blog {
     content: string;
     createdAt: string;
     publishedDate: string;
-    author: { name: string };
+    author: {
+        [x: string]: any; name: string
+    };
     likeCount: number;
     dislikeCount: number;
     [key: string]: any; // Allow additional properties

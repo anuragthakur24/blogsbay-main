@@ -81,7 +81,7 @@ export const AppBar = () => {
                 transition={{ duration: 0.5 }}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
-                    <div className="flex justify-between items-center h-16">yy
+                    <div className="flex justify-between items-center h-16">
                         <Link to="/blogs" className="text-2xl sm:text-3xl font-extrabold text-indigo-400 tracking-wide hover:text-indigo-300 transition duration-300">
                             BlogsBay
                         </Link>

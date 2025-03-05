@@ -2,19 +2,41 @@ import { Link } from "react-router-dom";
 import { Blog, useDate } from "../Hooks";
 import { AppBar } from "./AppBar";
 import { Avatar } from "./BlogCard";
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useLikeDislike } from "../Hooks";
+import { jwtDecode } from "jwt-decode";
+import { useState } from "react";
+
+interface TokenPayload {
+    id: string;
+}
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
+
+    const [showError, setShowError] = useState(false);
     const { dates } = useDate();
     const publishedDate = dates[blog.id] || "...";
     const { isLiked, isDisliked, toggleLike, toggleDislike, isLoading, isProcessingLike, isProcessingDislike } = useLikeDislike(blog.id);
     const isButtonDisabled = isLoading || isProcessingLike || isProcessingDislike;
-    
+
+    // Retrieve and decode the token to get the current user's id
+    const token = localStorage.getItem("token");
+    let currentUserId = "";
+    if (token) {
+        try {
+            const decoded = jwtDecode<TokenPayload>(token);
+            currentUserId = decoded.id; // Adjust this based on your JWT payload structure
+        } catch (error) {
+            console.error("Failed to decode token:", error);
+        }
+    }
+    // Check if the current user is the blog's owner
+    const isOwner = currentUserId === blog.author.id;
+
     return (
         <div className="bg-[#0f172a] min-h-screen text-gray-200">
             <AppBar />
-            <div className="flex justify-center pt-20 lg:pt-24 px-4">
+            <div className="flex justify-center pt-20 pb-20 lg:pt-24 lg:pb-24 px-4">
                 <div className="w-full max-w-6xl space-y-6 p-4 sm:p-5 lg:p-7 bg-[#15203a] rounded-xl ">
                     {/* Main Blog Wrapper */}
                     <motion.div
@@ -90,21 +112,44 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                                 </button>
                             </div>
 
-                            {/* Edit Button */}
-                            <Link to={`/edit/${blog.id}`} className="w-full sm:w-auto">
+                            {/* Edit Button with error message on click for non-owner */}
+                            {isOwner ? (
+                                <Link to={`/edit/${blog.id}`} className="w-full sm:w-auto">
+                                    <motion.button
+                                        className="w-full bg-indigo-800 hover:bg-indigo-900 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
+                                    >
+                                        Edit Blog
+                                    </motion.button>
+                                </Link>
+                            ) : (<div className="relative w-full sm:w-auto">
                                 <motion.button
-                                    className="w-full sm:w-auto bg-indigo-800 hover:bg-indigo-900 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
-                                    whileHover={{ scale: 1.1 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    transition={{ duration: 0.3 }}
+                                    onClick={() => {
+                                        setShowError(true);
+                                        setTimeout(() => setShowError(false), 3000);
+                                    }}
+                                    className="w-full lg:w-auto bg-indigo-800 hover:bg-indigo-900 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 flex justify-center"
                                 >
                                     Edit Blog
                                 </motion.button>
-                            </Link>
+                                <AnimatePresence>
+                                    {showError && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 5 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: 5 }}
+                                            transition={{ duration: 0.5 }}
+                                            className="absolute left-0 right-0 mt-2 text-red-500 text-sm text-center flex justify-center lg:justify-end whitespace-nowrap"
+                                        >
+                                            Only the owner of this blog can make edits.
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                            )}
                         </motion.div>
                     </motion.div>
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
