@@ -2,11 +2,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { Avatar } from "./BlogCard";
+import { useUserProfile } from "../Hooks";
 
 export const AppBar = () => {
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
+    const { user } = useUserProfile();
 
     async function handleLogout() {
         try {
@@ -14,12 +17,13 @@ export const AppBar = () => {
             const res = await fetch(`${BACKEND_URL}/api/v1/user/logout`, {
                 method: "POST",
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    Authorization: `${token}`,
                     "Content-Type": "application/json",
                 },
             });
             if (res.ok) {
                 localStorage.removeItem("token");
+                localStorage.removeItem("user");
                 navigate("/signup");
             }
         } catch (error) {
@@ -98,11 +102,13 @@ export const AppBar = () => {
                                 <span className="pl-1">Create Blog</span>
                             </Link>
                             <div className="relative">
-                                <motion.button onClick={() => setAvatarMenuOpen(!avatarMenuOpen)} whileTap={{ scale: 0.95 }} className="mt-1 focus:outline-none">
-                                    <div className="relative w-10 h-10 overflow-hidden bg-[#2d466e] rounded-full">
-                                        <svg className="absolute w-12 h-12 text-indigo-200/55 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                                        </svg>
+                                <motion.button onClick={() => setAvatarMenuOpen(!avatarMenuOpen)} whileTap={{ scale: 0.95 }} className="border-2 border-indigo-400 rounded-full ">
+                                    <div className=" flex items-center justify-center relative w-10 h-10 overflow-hidden rounded-full">
+                                        {user?.name ? (
+                                            <Avatar name={user.name} size="big" />
+                                        ) : (
+                                            <img src="/logo.jpg" alt="Logo" className="w-10 h-10 object-cover rounded-full" />
+                                        )}
                                     </div>
                                 </motion.button>
                                 <AnimatePresence>
@@ -123,11 +129,13 @@ export const AppBar = () => {
                         </div>
 
                         {/* Mobile Menu Toggle (without Create Blog button) */}
-                        <button onClick={() => setMenuOpen(!menuOpen)} className="sm:hidden flex flex-col space-y-1 focus:outline-none">
-                            <div className="relative w-10 h-10 overflow-hidden bg-[#2d466e] rounded-full">
-                                <svg className="absolute w-12 h-12 text-indigo-200/55 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                    <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                                </svg>
+                        <button onClick={() => setMenuOpen(!menuOpen)} className="sm:hidden flex flex-col space-y-1 focus:outline-none border-2 border-indigo-400 rounded-full">
+                            <div className=" flex items-center justify-center relative w-10 h-10 overflow-hidden rounded-full">
+                                {user?.name ? (
+                                    <Avatar name={user.name} size="big" />
+                                ) : (
+                                    <img src="/logo.jpg" alt="Logo" className="w-10 h-10 object-cover rounded-full" />
+                                )}
                             </div>
                         </button>
                     </div>

@@ -1,11 +1,11 @@
-import { AppBar } from "../components/AppBar";
 import { motion } from "framer-motion";
+import { AppBar2 } from "../components/AppBar2";
 
 export const AboutUs = () => {
     return (
         <div className="bg-[#0f172a] min-h-screen text-gray-200">
             {/* AppBar for navigation */}
-            <AppBar />
+            <AppBar2 />
 
             <div className="flex justify-center pt-20 lg:pt-24 px-4">
                 <div className="w-full max-w-6xl space-y-6 p-4 sm:p-5 lg:p-7 bg-[#15203a] rounded-xl">
@@ -29,11 +29,11 @@ export const AboutUs = () => {
                             </h1>
 
                             {/* Description */}
-                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-4xl">
+                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-6xl">
                                 A platform built for passionate writers and readers alike. Here, you can create, read, update, and delete your blogs while engaging with a vibrant community through likes and dislikes. Our goal is to provide a seamless and interactive blogging experience for everyone.
                             </p>
 
-                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-4xl">
+                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-6xl">
                                 BlogsBay was created by <span className="text-indigo-400 font-bold">Anurag Thakur</span>, a developer passionate about building meaningful digital experiences. If you're interested in the source code, feel free to check out the project on GitHub. 🚀
                             </p>
 

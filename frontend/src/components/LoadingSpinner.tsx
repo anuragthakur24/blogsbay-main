@@ -7,7 +7,7 @@ export const LoadingSpinner = () => {
         <div className="absolute inset-0 w-full h-full animate-ping rounded-full bg-gradient-to-r from-blue-700 to-blue-600 opacity-75"></div>
 
         {/* Inner logo container */}
-        <div className="relative w-full h-full rounded-full bg-[#2d62dc] flex items-center justify-center shadow-xl">
+        <div className="relative w-full h-full rounded-full bg-[#2d64e6] flex items-center justify-center shadow-xl">
           {/* Circular logo in the center */}
           <img
             src="/logo.jpg"

@@ -5,15 +5,7 @@ import { PrismaClient } from "@prisma/client/edge";
 import { createBlogInput } from "@anuragthakur24/medium-common-zod";
 
 // Create Hono app instance with custom typings for environment variables and userId in context
-export const blogRoutes = new Hono<{
-    Bindings: {
-        JWT_PASS: string,
-        DATABASE_URL: string
-    },
-    Variables: {
-        userId: string
-    }
-}>();
+export const blogRoutes = new Hono<{ Bindings: { JWT_PASS: string, DATABASE_URL: string }, Variables: { userId: string } }>();
 
 // Middleware for verifying JWT token
 blogRoutes.use("/*", async (c, next) => {
@@ -38,14 +30,14 @@ blogRoutes.use("/*", async (c, next) => {
 blogRoutes.post('/create', async (c) => {
     const prisma = new PrismaClient({ datasourceUrl: c.env.DATABASE_URL }).$extends(withAccelerate());
     const body = await c.req.json();
-    
+
     // Validate the blog input using Zod
     const { success } = createBlogInput.safeParse(body);
     if (!success) {
         c.status(411);
         return c.json({ message: "Invalid credentials" });
     }
-    
+
     const authorId = c.get("userId");
     try {
         // Create a new blog post
@@ -155,7 +147,7 @@ blogRoutes.put('/update/:id', async (c) => {
             c.status(404);
             return c.json({ message: "Blog not found" });
         }
-        
+
         // Check if the current user is the author of the blog
         if (existingBlog.authorId !== userId) {
             c.status(403);
@@ -295,4 +287,3 @@ blogRoutes.put('/dislike/:id', async (c) => {
         return c.json({ message: "Error disliking blog" });
     }
 });
-

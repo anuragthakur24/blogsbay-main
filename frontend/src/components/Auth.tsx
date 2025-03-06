@@ -1,12 +1,13 @@
 import { SignupInput } from "@anuragthakur24/medium-common-zod";
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 import { motion } from "framer-motion";
 
 export const Auth = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [postInputs, setPostInputs] = useState<SignupInput>({ name: "", username: "", password: "" });
     const [isLoading, setIsLoading] = useState(false);
     const [emailError, setEmailError] = useState<string | null>(null);
@@ -50,6 +51,21 @@ export const Auth = () => {
                     initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 1.5, ease: "easeInOut" }}
                 />
             )}
+
+            {/* Circular logo in the center */}
+            <div className="flex justify-center">
+                <motion.img
+                    key={location.pathname} // Ensures animation runs when the page changes
+                    src="/logo.jpg"
+                    alt="Logo"
+                    className="w-14 h-14 object-contain mb-1"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    whileHover={{ scale: 1.2 }} // Only hover over the img
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 10 }}
+                />
+            </div>
 
             {/* Header Section */}
             <h1 className="text-4xl font-extrabold text-indigo-400 text-center">BlogsBay</h1>

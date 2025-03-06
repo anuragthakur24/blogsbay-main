@@ -166,15 +166,22 @@ interface User {
 // Hook to fetch user profile details
 export const useUserProfile = () => {
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<User | null>(null);
+    const [user, setUser] = useState<User | null>(
+        JSON.parse(localStorage.getItem("user") || "null")
+    );
 
     useEffect(() => {
+        if (user) {
+            setLoading(false);
+            return; // Skip fetching if user is already stored
+        }
         axios
             .get(`${BACKEND_URL}/api/v1/user/profile`, {
                 headers: { Authorization: `${localStorage.getItem("token") || ""}` },
             })
             .then((res) => {
                 setUser(res.data.user);
+                localStorage.setItem("user", JSON.stringify(res.data.user));
                 setLoading(false);
             })
             .catch((err) => {

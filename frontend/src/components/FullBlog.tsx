@@ -54,7 +54,8 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                         >
                             <h1 className="text-2xl md:text-4xl font-extrabold text-gray-100">{blog.title}</h1>
                             <p className="text-gray-400 py-2 text-sm">Posted on {publishedDate}</p>
-                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-4xl">{blog.content}</p>
+
+                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-4xl whitespace-pre-wrap">{blog.content}</p>
                         </motion.div>
 
                         {/* Author Section */}
