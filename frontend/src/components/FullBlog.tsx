@@ -50,7 +50,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                             initial={{ x: -60 }}
                             animate={{ x: 0 }}
                             transition={{ type: "spring", stiffness: 90, damping: 20 }}
-                            className="md:col-span-8"
+                            className="md:col-span-9"
                         >
                             <h1 className="text-2xl md:text-4xl font-extrabold text-gray-100">{blog.title}</h1>
                             <p className="text-gray-400 py-2 text-sm">Posted on {publishedDate}</p>
@@ -63,7 +63,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3, duration: 0.8 }}
-                            className="md:col-span-4"
+                            className="md:col-span-3"
                         >
                             <h2 className="text-gray-400 font-semibold text-base">Author</h2>
                             <div className="flex items-center mt-2">
