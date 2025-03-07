@@ -86,9 +86,18 @@ export const AppBar = () => {
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
                     <div className="flex justify-between items-center h-16">
-                        <Link to="/blogs" className="text-2xl sm:text-3xl font-extrabold text-indigo-400 tracking-wide hover:text-indigo-300 transition duration-300">
-                            BlogsBay
-                        </Link>
+
+                        {/* Circular logo */}
+                        <div className="flex items-center">
+                            <img
+                                src="/logo.jpg"
+                                alt="Logo"
+                                className="w-11 h-10 md:w-12 md:h-11 object-contain"
+                            />
+                            <Link to="/blogs" className="text-2xl md:text-3xl font-extrabold text-indigo-400 tracking-wide hover:text-indigo-300 transition duration-300">
+                                BlogsBay
+                            </Link>
+                        </div>
 
                         {/* Desktop Navigation */}
                         <div className="hidden sm:flex space-x-3 items-center">
@@ -134,7 +143,7 @@ export const AppBar = () => {
                                 {user?.name ? (
                                     <Avatar name={user.name} size="big" />
                                 ) : (
-                                    <img src="/logo.jpg" alt="Logo" className="w-10 h-10 object-cover rounded-full" />
+                                    <img src="/logo.jpg" alt="Logo" className="w-9 h-9 object-cover rounded-full" />
                                 )}
                             </div>
                         </button>

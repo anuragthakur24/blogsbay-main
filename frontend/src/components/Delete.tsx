@@ -36,7 +36,7 @@ export const DeleteAccount = () => {
         <div className="bg-[#0f172a] min-h-screen text-gray-200 relative">
             <AppBar />
             <div className="flex justify-center pt-20 lg:pt-24 px-4">
-                <div className="w-full max-w-3xl space-y-6 p-4 sm:p-5 lg:p-7 bg-[#15203a] rounded-xl">
+                <div className="w-full max-w-6xl space-y-6 p-4 sm:p-5 lg:p-7 bg-[#15203a] rounded-xl">
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
@@ -49,10 +49,10 @@ export const DeleteAccount = () => {
                             transition={{ type: "spring", stiffness: 90, damping: 20 }}
                             className="md:col-span-12"
                         >
-                            <h1 className="text-2xl md:text-4xl font-extrabold text-gray-100">
-                                Are you sure you want to delete your account?
+                            <h1 className="text-2xl md:text-4xl font-extrabold text-gray-100  max-w-6xl">
+                                Are you sure you want to delete your account? 
                             </h1>
-                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-4xl">
+                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-6xl">
                                 Deleting your account is <strong>permanent</strong> and <strong>cannot be undone</strong>.
                                 You will lose all your data and access to your profile.
                             </p>

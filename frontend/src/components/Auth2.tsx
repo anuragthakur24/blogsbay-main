@@ -50,7 +50,16 @@ export const Auth2 = () => {
                     initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 1.5, ease: "easeInOut" }}
                 />
             )}
-            
+
+            {/* logo in the center */}
+            <div className="mx-auto flex justify-center items-center w-14 h-14 border-2 border-indigo-400 rounded-full  mb-2">
+                <img
+                    src="/logo.jpg"
+                    alt="Logo"
+                    className="w-12 h-12 object-contain"
+                />
+            </div>
+
             {/* Title */}
             <h1 className="text-4xl font-extrabold text-indigo-400 text-center">BlogsBay</h1>
 
