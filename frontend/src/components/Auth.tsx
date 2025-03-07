@@ -12,11 +12,26 @@ export const Auth = () => {
     const [emailError, setEmailError] = useState<string | null>(null);
     const [signupError, setSignupError] = useState<string | null>(null);
 
+
     // Function to handle signup request
     async function sendRequest() {
         setIsLoading(true);
         setEmailError(null);
         setSignupError(null);
+
+        if (postInputs.password.length < 6) {
+            setSignupError("Password must be at least 6 characters long.");
+            setIsLoading(false);
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(postInputs.username)) {
+            setEmailError("Invalid email format. Use (e.g., youremail@gmail.com).");
+            setIsLoading(false);
+            return;
+        }
+
         try {
             const res = await axios.post(`${BACKEND_URL}/api/v1/user/signup`, postInputs);
             localStorage.setItem("token", res.data.jwt);

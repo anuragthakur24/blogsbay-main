@@ -23,9 +23,21 @@ export const Blogs = () => {
             </div>
         );
     }
-
-    // Sort blogs by published date (or created date if missing)
+    //Sorting func. for blogs
     const sortedBlogs = [...blogs].sort((a, b) => {
+        // Compare likes first (higher likes first)
+        const likeDiff = b.likeCount - a.likeCount;
+        if (likeDiff !== 0) {
+            return likeDiff;
+        }
+
+        // If likes are the same, compare dislikes (lower dislikes first)
+        const dislikeDiff = a.dislikeCount - b.dislikeCount;
+        if (dislikeDiff !== 0) {
+            return dislikeDiff;
+        }
+
+        // If both likes and dislikes are the same, sort by date (newer first)
         const dateA = new Date(a.publishedDate || a.createdAt);
         const dateB = new Date(b.publishedDate || b.createdAt);
         return dateB.getTime() - dateA.getTime();

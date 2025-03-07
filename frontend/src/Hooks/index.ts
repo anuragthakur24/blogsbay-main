@@ -10,7 +10,8 @@ export interface Blog {
     createdAt: string;
     publishedDate: string;
     author: {
-        [x: string]: any; name: string
+        name: string
+        [x: string]: any; 
     };
     likeCount: number;
     dislikeCount: number;
