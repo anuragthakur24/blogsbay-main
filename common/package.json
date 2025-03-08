@@ -1,6 +1,6 @@
 {
   "name": "@anuragthakur24/medium-common-zod",
-  "version": "1.0.0",
+  "version": "3.0.10",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,6 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
-    "@anuragthakur24/medium-common-zod": "^1.0.0",
     "zod": "^3.24.1"
   }
 }

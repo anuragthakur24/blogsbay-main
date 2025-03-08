@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const signupInput = z.object({
-    username: z.string().email(),
-    password: z.string().min(6),
-    name: z.string().optional()
+    username: z.string().email({ message: "Invalid email format. Use (e.g., youremail@gmail.com)" }),
+    password: z.string().min(6, { message: "Password must be at least 6 characters long " }),
+    name: z.string().min(1, { message: "Name is required" })
 })
 
 export const signinInput = z.object({

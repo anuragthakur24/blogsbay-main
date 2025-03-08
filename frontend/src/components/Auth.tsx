@@ -1,4 +1,4 @@
-import { SignupInput } from "@anuragthakur24/medium-common-zod";
+import { signupInput, SignupInput } from "@anuragthakur24/medium-common-zod";
 import axios from "axios";
 import { ChangeEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 export const Auth = () => {
     const navigate = useNavigate();
     const [postInputs, setPostInputs] = useState<SignupInput>({ name: "", username: "", password: "" });
+    const [errors, setErrors] = useState<{ name?: string; username?: string; password?: string }>({});
     const [isLoading, setIsLoading] = useState(false);
     const [emailError, setEmailError] = useState<string | null>(null);
     const [signupError, setSignupError] = useState<string | null>(null);
@@ -18,16 +19,23 @@ export const Auth = () => {
         setIsLoading(true);
         setEmailError(null);
         setSignupError(null);
+        setErrors({});
 
-        if (postInputs.password.length < 6) {
-            setSignupError("Password must be at least 6 characters long.");
-            setIsLoading(false);
+        if (!postInputs.name || !postInputs.username || !postInputs.password) {
+            setSignupError("All fields are required*");
+            setIsLoading(false); 
             return;
         }
 
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(postInputs.username)) {
-            setEmailError("Invalid email format. Use (e.g., youremail@gmail.com).");
+        const result = signupInput.safeParse(postInputs);
+        if (!result.success) {
+            const fieldErrors: Record<string, string> = {};
+            result.error.errors.forEach((err) => {
+                if (err.path[0]) {
+                    fieldErrors[err.path[0]] = err.message;
+                }
+            });
+            setErrors(fieldErrors);
             setIsLoading(false);
             return;
         }
@@ -85,12 +93,19 @@ export const Auth = () => {
 
             {/* Signup Form */}
             <div className="mt-5 space-y-5">
-                <LabelledInput label="Name" placeholder="Enter your name" onChange={(e) => setPostInputs({ ...postInputs, name: e.target.value })} />
+                <div className="space-y-1">
+                    <LabelledInput label="Name" placeholder="Enter your name" onChange={(e) => setPostInputs({ ...postInputs, name: e.target.value })} />
+                    {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
+                </div>
                 <div className="space-y-1">
                     <LabelledInput label="Email" placeholder="Enter any email (even non-existing)" onChange={(e) => setPostInputs({ ...postInputs, username: e.target.value })} />
                     {emailError && (<p className="text-red-500 text-sm mt-1">{emailError}</p>)}
+                    {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
                 </div>
-                <LabelledInput label="Password" type="password" placeholder="********" onChange={(e) => setPostInputs({ ...postInputs, password: e.target.value })} />
+                <div className="space-y-1">
+                    <LabelledInput label="Password" type="password" placeholder="********" onChange={(e) => setPostInputs({ ...postInputs, password: e.target.value })} />
+                    {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                </div>
             </div>
 
             {/* Signup Error Message */}
