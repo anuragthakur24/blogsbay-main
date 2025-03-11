@@ -18,4 +18,7 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - **Validation & Type Inference:** Zod  
 - **ORM:** Prisma  
 - **Database:** Postgres  
-- **Authentication:** JWT  
+- **Authentication:** JWT
+ 
+###Link
+https://blogsbay.vercel.app/signup
