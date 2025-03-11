@@ -19,6 +19,7 @@ export const DeleteAccount = () => {
     useEffect(() => {
         if (success) {
             localStorage.removeItem("token");
+            localStorage.removeItem("user");
             setShowSuccessMessage(true);
             setTimeout(() => {
                 setShowSuccessMessage(false);
