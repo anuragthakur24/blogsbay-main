@@ -20,5 +20,5 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - **Database:** Postgres  
 - **Authentication:** JWT
  
-###Link
+### Live Link
 https://blogsbay.vercel.app/signup
