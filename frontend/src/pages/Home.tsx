@@ -3,9 +3,9 @@ import { About } from "../components/AboutStyle";
 import { AppBar3 } from "../components/AppBar3";
 import { BlogSlider } from "../components/BlogSlider";
 import HeroSection from "../components/HeroSection";
-import ExpressYourselfCard from "../components/1BlogImportanceCard";
-import ImproveSkillsCard from "../components/3BlogImportanceCard";
-import ShareKnowledgeCard from "../components/2BlogImportanceCard";
+import ExpressYourselfCard from "../components/1BlogCard";
+import ShareKnowledgeCard from "../components/2BlogCard";
+import ImproveSkillsCard from "../components/3BlogCard";
 
 export default function Home() {
 
