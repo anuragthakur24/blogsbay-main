@@ -56,7 +56,7 @@ export const Auth = () => {
     }
 
     return (
-        <motion.div className="relative w-full max-w-lg p-6 md:p-8 bg-[#1e293b] rounded-2xl shadow-lg text-white mx-auto"
+        <motion.div className="relative w-full max-w-lg p-6 md:p-8 bg-[#1e293b]/50 backdrop-blur-2xl rounded-2xl shadow-lg text-white mx-auto"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
 
             {/* About Link */}
@@ -69,7 +69,7 @@ export const Auth = () => {
 
             {/* Loading Bar Animation */}
             {isLoading && (
-                <motion.div className="fixed top-0 left-0 w-full h-1 bg-indigo-500 z-50"
+                <motion.div className="fixed top-0 left-0 w-full h-1 bg-indigo-500 z-50 animate-pulse"
                     initial={{ width: 0 }} animate={{ width: "100%" }} transition={{ duration: 1.5, ease: "easeInOut" }}
                 />
             )}
@@ -84,7 +84,7 @@ export const Auth = () => {
             </div>
 
             {/* Header Section */}
-            <h1 className="text-4xl font-extrabold text-indigo-400 text-center">BlogsBay</h1>
+            <h1 className="text-4xl font-extrabold pb-1 bg-gradient-to-b from-blue-600/95 via-blue-200 to-white/90 text-transparent bg-clip-text text-center">BlogsBay</h1>
 
             {/* Sign-in Redirect */}
             <p className="text-gray-400 text-sm mt-2 text-center"> Already have an account?{" "}

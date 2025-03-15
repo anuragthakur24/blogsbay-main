@@ -11,7 +11,7 @@ export interface Blog {
     publishedDate: string;
     author: {
         name: string
-        [x: string]: any; 
+        [x: string]: any;
     };
     likeCount: number;
     dislikeCount: number;
@@ -35,6 +35,28 @@ export const useBlog = ({ id }: { id: string }) => {
 
     return { loading, blog };
 };
+
+// Hook to fetch multiple blogs for home
+export const useBlogsHome = () => {
+    const [loading, setLoading] = useState(true);
+    const [blogs, setBlogs] = useState<Blog[]>([]);
+
+    useEffect(() => {
+        axios.get(`${BACKEND_URL}/api/v1/blog/bulk`).then(res => {
+            const noOfBlogs = res.data.blogs.map((blog: Blog) => ({
+                ...blog,
+                likeCount: blog._count.likes,
+                dislikeCount: blog._count.dislikes
+            }));
+            setBlogs(noOfBlogs);
+            setLoading(false);
+        }).catch(err => {
+            console.error('Error fetching blogs:', err);
+        });
+    }, [])
+    return { loading, blogs }
+}
+
 
 // Hook to fetch multiple blogs
 export const useBlogs = () => {
@@ -164,18 +186,32 @@ interface User {
     username: string;
 }
 
+
 // Hook to fetch user profile details
 export const useUserProfile = () => {
     const [loading, setLoading] = useState(true);
-    const [user, setUser] = useState<User | null>(
-        JSON.parse(localStorage.getItem("user") || "null")
-    );
+
+    const [user, setUser] = useState<User | null>(() => {
+        const storedUser = localStorage.getItem("user");
+
+        // Ensure storedUser is neither null nor "undefined"
+        if (storedUser && storedUser !== "undefined") {
+            try {
+                return JSON.parse(storedUser);
+            } catch (error) {
+                console.error("Error parsing stored user:", error);
+                localStorage.removeItem("user"); // Remove invalid data
+            }
+        }
+        return null;
+    });
 
     useEffect(() => {
         if (user) {
             setLoading(false);
             return; // Skip fetching if user is already stored
         }
+
         axios
             .get(`${BACKEND_URL}/api/v1/user/profile`, {
                 headers: { Authorization: `${localStorage.getItem("token") || ""}` },

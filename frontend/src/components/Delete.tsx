@@ -12,7 +12,7 @@ export const DeleteAccount = () => {
 
     // Redirect to login if user is not logged in
     useEffect(() => {
-        if (!localStorage.getItem("token")) navigate("/login");
+        if (!localStorage.getItem("token")) navigate("/");
     }, [navigate]);
 
     // Show success message and redirect after deletion

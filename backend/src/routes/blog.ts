@@ -9,6 +9,13 @@ export const blogRoutes = new Hono<{ Bindings: { JWT_PASS: string, DATABASE_URL:
 
 // Middleware for verifying JWT token
 blogRoutes.use("/*", async (c, next) => {
+
+    const publicRoutes = ["/","/api/v1/blog/bulk"];
+
+    if(publicRoutes.includes(c.req.path)){
+        return next();
+    }
+    
     const authHeader = c.req.header("authorization") || "";
     try {
         // Verify JWT and set userId in context

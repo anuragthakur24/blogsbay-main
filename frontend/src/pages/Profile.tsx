@@ -4,11 +4,18 @@ import { Blog, useBlogs, useUserProfile } from "../Hooks";
 import { useEffect, useState } from "react";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { AppBar } from "../components/AppBar";
+import { useNavigate } from "react-router-dom";
 
 export const Profile = () => {
   const { loading: profileLoading, user } = useUserProfile();
   const { loading: blogsLoading, blogs } = useBlogs();
   const [userBlogs, setUserBlogs] = useState<Blog[]>([]);
+  const navigate = useNavigate();
+
+  // Redirect to login if user is not logged in
+  useEffect(() => {
+    if (!localStorage.getItem("token")) navigate("/");
+  }, [navigate]);
 
   useEffect(() => {
     if (!blogsLoading && user) {
@@ -88,7 +95,7 @@ export const Profile = () => {
                             whileHover={{ scale: 1.02 }}
                             className="p-4 bg-[#19263d] rounded-lg transition transform hover:bg-[#172237]"
                           >
-                            <a href={`/blog/${blog.id}`} className="block">
+                            <a href={`/blog/${blog.id}`} className="block truncate">
                               <p className="text-base font-medium">{blog.title}</p>
                             </a>
                           </motion.li>

@@ -15,6 +15,11 @@ export const Publish = () => {
     const { loading } = useBlogs();
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+    // Redirect to login if user is not logged in
+    useEffect(() => {
+        if (!localStorage.getItem("token")) navigate("/");
+    }, [navigate]);
+
     // Automatically remove error message after 3 seconds
     useEffect(() => {
         if (errorMessage) {

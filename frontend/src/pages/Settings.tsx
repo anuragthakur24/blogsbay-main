@@ -3,12 +3,18 @@ import { motion } from "framer-motion";
 import { useSettings } from "../Hooks";
 import { AppBar } from "../components/AppBar";
 import { LoadingSpinner } from "../components/LoadingSpinner";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Settings = () => {
   const { updateSettings, updateLoading, settingsLoading, error, success, settings } = useSettings();
   const [formData, setFormData] = useState({ name: "", username: "", password: "" });
   const [validationError, setValidationError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  // Redirect to login if user is not logged in
+  useEffect(() => {
+    if (!localStorage.getItem("token")) navigate("/");
+  }, [navigate]);
 
   // When settings update, populate form inputs with current settings
   useEffect(() => {
@@ -66,7 +72,7 @@ export const Settings = () => {
               animate={{ x: 0 }}
               transition={{ type: "spring", stiffness: 90, damping: 20 }}>
 
-               {/* Page heading and description */}
+              {/* Page heading and description */}
               <div className="mb-6 mt-1 text-center">
                 <h1 className="text-2xl md:text-3xl font-bold">Manage Your Account</h1>
                 <p className="text-xs md:text-sm text-gray-400 mt-1">
@@ -121,7 +127,7 @@ export const Settings = () => {
               {success && <p className="text-green-400 text-center mt-3">Changes applied successfully!</p>}
 
               <div className="mt-5 text-center text-sm space-x-1 text-gray-400 flex justify-center">
-                <p>Want to delete your account?</p>
+                <p>Want to <span className="text-red-400">delete</span> your account?</p>
                 <Link to="/delete" className="text-gray-300 hover:underline">
                   click here
                 </Link>

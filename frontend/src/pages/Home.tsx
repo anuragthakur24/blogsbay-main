@@ -1,0 +1,35 @@
+import { useRef } from "react";
+import { About } from "../components/AboutStyle";
+import { AppBar3 } from "../components/AppBar3";
+import { BlogSlider } from "../components/BlogSlider";
+import HeroSection from "../components/HeroSection";
+import ExpressYourselfCard from "../components/1BlogImportanceCard";
+import ImproveSkillsCard from "../components/3BlogImportanceCard";
+import ShareKnowledgeCard from "../components/2BlogImportanceCard";
+
+export default function Home() {
+
+    const blogSliderRef = useRef<HTMLDivElement | null>(null);
+    return (
+        <div className="bg-[#0f172a] min-h-screen select-none">
+            {/* App Bar */}
+            <AppBar3 />
+
+            {/* Hero Section */}
+            <HeroSection blogSliderRef={blogSliderRef} />
+
+            {/*Cards */}
+            <ExpressYourselfCard />
+            <ShareKnowledgeCard />
+            <ImproveSkillsCard />
+
+            {/*Blog Slider Section */}
+            <div ref={blogSliderRef}>
+                <BlogSlider />
+            </div>
+
+            {/* About Section */}
+            <About />
+        </div>
+    );
+}

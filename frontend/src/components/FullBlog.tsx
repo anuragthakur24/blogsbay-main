@@ -2,10 +2,9 @@ import { Link } from "react-router-dom";
 import { Blog, useDate } from "../Hooks";
 import { AppBar } from "./AppBar";
 import { Avatar } from "./BlogCard";
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useLikeDislike } from "../Hooks";
 import { jwtDecode } from "jwt-decode";
-import { useState } from "react";
 
 interface TokenPayload {
     id: string;
@@ -13,7 +12,6 @@ interface TokenPayload {
 
 export const FullBlog = ({ blog }: { blog: Blog }) => {
 
-    const [showError, setShowError] = useState(false);
     const { dates } = useDate();
     const publishedDate = dates[blog.id] || "...";
     const { isLiked, isDisliked, toggleLike, toggleDislike, isLoading, isProcessingLike, isProcessingDislike } = useLikeDislike(blog.id);
@@ -50,12 +48,12 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                             initial={{ x: -60 }}
                             animate={{ x: 0 }}
                             transition={{ type: "spring", stiffness: 90, damping: 20 }}
-                            className="md:col-span-9"
+                            className="md:col-span-9 overflow-hidden"
                         >
-                            <h1 className="text-2xl md:text-4xl font-extrabold text-gray-100">{blog.title}</h1>
+                            <h1 className="text-2xl md:text-4xl font-extrabold break-words text-gray-100">{blog.title}</h1>
                             <p className="text-gray-400 py-2 text-sm">Posted on {publishedDate}</p>
 
-                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-4xl whitespace-pre-wrap">{blog.content}</p>
+                            <p className="mt-4 text-gray-300 leading-relaxed text-base max-w-4xl whitespace-pre-wrap break-words">{blog.content}</p>
                         </motion.div>
 
                         {/* Author Section */}
@@ -114,7 +112,7 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                             </div>
 
                             {/* Edit Button with error message on click for non-owner */}
-                            {isOwner ? (
+                            {isOwner && (
                                 <Link to={`/edit/${blog.id}`} className="w-full sm:w-auto">
                                     <motion.button
                                         className="w-full bg-indigo-800 hover:bg-indigo-900 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 flex items-center justify-center"
@@ -122,31 +120,8 @@ export const FullBlog = ({ blog }: { blog: Blog }) => {
                                         Edit Blog
                                     </motion.button>
                                 </Link>
-                            ) : (<div className="relative w-full sm:w-auto">
-                                <motion.button
-                                    onClick={() => {
-                                        setShowError(true);
-                                        setTimeout(() => setShowError(false), 3000);
-                                    }}
-                                    className="w-full lg:w-auto bg-indigo-800 hover:bg-indigo-900 text-white font-semibold px-5 py-2 rounded-lg shadow-md transition-all duration-300 focus:ring-2 focus:ring-blue-500 flex justify-center"
-                                >
-                                    Edit Blog
-                                </motion.button>
-                                <AnimatePresence>
-                                    {showError && (
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 5 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            exit={{ opacity: 0, y: 5 }}
-                                            transition={{ duration: 0.5 }}
-                                            className="absolute left-0 right-0 mt-2 text-red-500 text-sm text-center flex justify-center lg:justify-end whitespace-nowrap"
-                                        >
-                                            Only the blog owner has permission to edit.
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
-                            </div>
                             )}
+                            
                         </motion.div>
                     </motion.div>
                 </div>

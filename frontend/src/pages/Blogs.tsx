@@ -1,12 +1,19 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppBar } from "../components/AppBar";
 import { BlogCard } from "../components/BlogCard";
 import { BlogSkeleton } from "../components/BlogSkeleton";
 import { useBlogs } from "../Hooks";
 import { Blog } from "../Hooks";
+import { useEffect } from "react";
 
 export const Blogs = () => {
     const { loading, blogs } = useBlogs();
+    const navigate = useNavigate();
+
+    // Redirect to login if user is not logged in
+    useEffect(() => {
+        if (!localStorage.getItem("token")) navigate("/");
+    }, [navigate]);
 
     // Show skeleton loaders while blogs are loading
     if (loading) {
@@ -55,7 +62,7 @@ export const Blogs = () => {
                             : (blog.createdAt ? new Date(blog.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" }) : "Unknown Date");
 
                         return (
-                            <div key={blog.id} className="hover:shadow-xl rounded-lg transition-transform duration-300">
+                            <div key={blog.id}>
                                 <BlogCard
                                     id={blog.id}
                                     authorName={blog.author.name || "Anonymous"}

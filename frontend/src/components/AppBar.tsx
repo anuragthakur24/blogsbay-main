@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Avatar } from "./BlogCard";
 import { useUserProfile } from "../Hooks";
 
@@ -9,7 +9,16 @@ export const AppBar = () => {
     const navigate = useNavigate();
     const [menuOpen, setMenuOpen] = useState(false);
     const [avatarMenuOpen, setAvatarMenuOpen] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const { user } = useUserProfile();
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 50);
+        };
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     async function handleLogout() {
         try {
@@ -24,7 +33,7 @@ export const AppBar = () => {
             if (res.ok) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("user");
-                navigate("/signup");
+                navigate("/");
             }
         } catch (error) {
             console.error("Error during logout:", error);
@@ -79,31 +88,38 @@ export const AppBar = () => {
     return (
         <>
             <motion.nav
-                className="w-full bg-[#172130] text-white shadow-lg fixed top-0 z-50 backdrop-blur-lg"
+                className={`w-full fixed top-0 z-50 backdrop-blur-lg text-white transition-all duration-300 ${isScrolled ? "bg-[#172130]/80 shadow-lg" : "bg-transparent"
+                    }`}
                 initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
                     <div className="flex justify-between items-center h-16">
-
                         {/* Circular logo */}
                         <div className="flex items-center">
-                            <img
-                                src="/logo.jpg"
-                                alt="Logo"
-                                className="w-11 h-10 md:w-12 md:h-11 object-contain"
-                            />
-                            <Link to="/blogs" className="text-2xl md:text-3xl font-extrabold text-indigo-400 tracking-wide hover:text-indigo-300 transition duration-300">
+                            <img src="/logo.jpg" alt="Logo" className="w-11 h-10 md:w-12 md:h-11 object-contain" />
+                            <Link
+                                to="/blogs"
+                                className={`text-2xl font-extrabold tracking-wide transition duration-300 ${isScrolled
+                                        ? "text-indigo-400"
+                                        : "bg-gradient-to-b from-blue-600/95 via-blue-200 to-white/90 text-transparent bg-clip-text"
+                                    }`}
+                            >
                                 BlogsBay
                             </Link>
+
                         </div>
 
                         {/* Desktop Navigation */}
                         <div className="hidden sm:flex space-x-3 items-center">
                             <Link
                                 to="/publish"
-                                className="flex items-center bg-indigo-600 hover:bg-indigo-700 focus:outline focus:outline-indigo-400 px-5 py-2 rounded-xl shadow-md transition duration-300 font-semibold"
+                                className={
+                                    isScrolled
+                                        ? "flex items-center bg-indigo-600 hover:bg-indigo-700 focus:outline focus:outline-indigo-400 px-5 py-2 rounded-full shadow-md transition duration-300 font-semibold"
+                                        : "flex items-center px-5 py-2 bg-gradient-to-br hover:from-cyan-500 hover:to-indigo-600 from-cyan-500/90 to-indigo-600/90 rounded-full font-semibold"
+                                }
                             >
                                 <svg className="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
@@ -111,8 +127,8 @@ export const AppBar = () => {
                                 <span className="pl-1">Create Blog</span>
                             </Link>
                             <div className="relative">
-                                <motion.button onClick={() => setAvatarMenuOpen(!avatarMenuOpen)} whileTap={{ scale: 0.95 }} className="border-2 border-indigo-400 rounded-full ">
-                                    <div className=" flex items-center justify-center relative w-10 h-10 overflow-hidden rounded-full">
+                                <motion.button onClick={() => setAvatarMenuOpen(!avatarMenuOpen)} whileTap={{ scale: 0.95 }} className="border-2 border-indigo-400 rounded-full">
+                                    <div className="flex items-center justify-center relative w-10 h-10 overflow-hidden rounded-full">
                                         {user?.name ? (
                                             <Avatar name={user.name} size="big" />
                                         ) : (
@@ -120,26 +136,12 @@ export const AppBar = () => {
                                         )}
                                     </div>
                                 </motion.button>
-                                <AnimatePresence>
-                                    {avatarMenuOpen && (
-                                        <motion.div
-                                            className="absolute right-1 mt-3 w-48 bg-[#1a273a] rounded-md shadow-lg py-3 px-2 z-10"
-                                            variants={dropdownVariants}
-                                            initial="hidden"
-                                            animate="visible"
-                                            exit="exit"
-                                            transition={{ duration: 0.2 }}
-                                        >
-                                            {menuContent}
-                                        </motion.div>
-                                    )}
-                                </AnimatePresence>
                             </div>
                         </div>
 
                         {/* Mobile Menu Toggle (without Create Blog button) */}
                         <button onClick={() => setMenuOpen(!menuOpen)} className="sm:hidden flex flex-col space-y-1 focus:outline-none border-2 border-indigo-400 rounded-full">
-                            <div className=" flex items-center justify-center relative w-10 h-10 overflow-hidden rounded-full">
+                            <div className="flex items-center justify-center relative w-10 h-10 overflow-hidden rounded-full">
                                 {user?.name ? (
                                     <Avatar name={user.name} size="big" />
                                 ) : (
@@ -149,23 +151,39 @@ export const AppBar = () => {
                         </button>
                     </div>
                 </div>
-
-                {/* Mobile Menu */}
-                <AnimatePresence>
-                    {menuOpen && (
-                        <motion.div
-                            className="sm:hidden absolute right-2 mt-2 w-48 bg-[#1a273a] rounded-md shadow-lg py-3 px-3 z-10"
-                            variants={dropdownVariants}
-                            initial="hidden"
-                            animate="visible"
-                            exit="exit"
-                            transition={{ duration: 0.2 }}
-                        >
-                            {menuContent}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
             </motion.nav>
+
+            {/* Desktop Menu */}
+            <AnimatePresence>
+                {avatarMenuOpen && (
+                    <motion.div
+                        className="hidden sm:block fixed right-2 xl:right-12 2xl:right-40 top-16 mt-2 w-48 bg-[#1a273a]/70 backdrop-blur-lg rounded-md shadow-lg py-3 px-2 z-10"
+                        variants={dropdownVariants}
+                        initial="hidden"
+                        animate="visible"
+                        exit="exit"
+                        transition={{ duration: 0.2 }}
+                    >
+                        {menuContent}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Mobile Menu */}
+            <AnimatePresence>
+                {menuOpen && (
+                    <motion.div
+                        className="sm:hidden fixed right-2 top-16 mt-2 w-48 bg-[#172130]/75 backdrop-blur-lg rounded-md shadow-lg py-3 px-3 z-[9999]"
+                        variants={dropdownVariants}
+                        initial="hidden" 
+                        animate="visible"
+                        exit="exit"
+                        transition={{ duration: 0.2 }}
+                    >
+                        {menuContent}
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
             {/* Floating Action Button for Mobile: Only visible on small screens */}
             <motion.div

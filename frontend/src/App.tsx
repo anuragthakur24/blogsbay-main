@@ -9,11 +9,13 @@ import { AboutUs } from './pages/About'
 import { Profile } from './pages/Profile'
 import { Settings } from './pages/Settings'
 import { DeleteAccount } from './components/Delete'
+import Home from './pages/Home'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path='/' element={<Home/>}/>
         <Route path="/signup" element={<Signup />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/blog/:id" element={<Blog />} />

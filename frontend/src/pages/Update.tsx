@@ -1,12 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useBlog } from "../Hooks";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { AppBar } from "../components/AppBar";
 import { Edit } from "./Edit";
+import { useEffect } from "react";
 
 export const Update = () => {
     const { id } = useParams(); // Get blog ID from URL params
     const { loading, blog } = useBlog({ id: id || "" }); // Fetch blog data
+    const navigate = useNavigate();
+
+    // Redirect to login if user is not logged in
+    useEffect(() => {
+        if (!localStorage.getItem("token")) navigate("/");
+    }, [navigate]);
 
     // Show loading spinner while fetching data
     if (loading) {

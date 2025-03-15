@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 export interface BlogCardProps {
@@ -11,9 +12,19 @@ export interface BlogCardProps {
 }
 
 export const BlogCard = ({ id, title, content, authorName, publishedDate, likeCount, dislikeCount }: BlogCardProps) => {
+
+    const [isHovered, setIsHovered] = useState(false);
+
     return (
-        <Link to={`/blog/${id}`} className="block">
-            <div className="w-full max-w-screen-lg bg-[#23324a] border border-[#2e3978] rounded-xl p-5 shadow-lg shadow-slate-900/30 transition-transform duration-300 hover:scale-[1.03] hover:shadow-indigo-500/60">
+        <Link to={`/blog/${id}`} className="block"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onTouchStart={() => setIsHovered(true)} // Mobile touch support
+            onTouchEnd={() => setIsHovered(false)} // Reset animation on touch end
+        >
+            <div className={`w-full max-w-screen-lg bg-[#23324a] border border-[#2e3978] rounded-xl p-5 shadow-lg shadow-slate-900/30 transition-transform duration-300 
+                ${isHovered ? "scale-[1.03] hover:shadow-indigo-500/60 active:scale-[1.03] active:shadow-indigo-500/60" : ""}`}
+            >
 
                 {/* Author Section */}
                 <div className="flex items-center space-x-3">
@@ -24,8 +35,8 @@ export const BlogCard = ({ id, title, content, authorName, publishedDate, likeCo
                 </div>
 
                 {/* Blog Title & Content */}
-                <div className="mt-4 text-xl font-bold text-gray-100">{title}</div>
-                <div className="mt-2 text-gray-300 text-base">
+                <div className="mt-4 text-xl font-bold text-gray-100 truncate">{title}</div>
+                <div className="mt-2 text-gray-300 text-base break-words">
                     {content.length > 150 ? content.slice(0, 150) + "..." : content}
                 </div>
 

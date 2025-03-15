@@ -34,7 +34,7 @@ export const Auth2 = () => {
     }
 
     return (
-        <motion.div className="w-full max-w-lg p-6 md:p-8 bg-[#1e293b] rounded-2xl shadow-lg text-white mx-auto"
+        <motion.div className="w-full max-w-lg p-6 md:p-8 bg-[#1e293b]/50 backdrop-blur-2xl rounded-2xl shadow-lg text-white mx-auto"
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
 
             {/* About Page Link */}
@@ -61,7 +61,7 @@ export const Auth2 = () => {
             </div>
 
             {/* Title */}
-            <h1 className="text-4xl font-extrabold text-indigo-400 text-center">BlogsBay</h1>
+            <h1 className="text-4xl font-extrabold pb-1 bg-gradient-to-b from-blue-600/95 via-blue-200 to-white/90 text-transparent bg-clip-text text-center">BlogsBay</h1>
 
             {/* Signup Link */}
             <p className="text-gray-400 text-sm mt-2 text-center">

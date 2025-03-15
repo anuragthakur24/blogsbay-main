@@ -1,13 +1,21 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useBlog } from "../Hooks";
 import { FullBlog } from "../components/FullBlog";
 import { LoadingSpinner } from "../components/LoadingSpinner";
 import { AppBar } from "../components/AppBar";
+import { useEffect } from "react";
 
 export const Blog = () => {
+  const navigate = useNavigate();
+
+  // Redirect to login if user is not logged in
+  useEffect(() => {
+    if (!localStorage.getItem("token")) navigate("/");
+  }, [navigate]);
+
   // Get the blog ID from the URL parameters
   const { id } = useParams();
-  
+
   // Fetch blog data using the custom hook
   const { loading, blog } = useBlog({ id: id || "" });
 
