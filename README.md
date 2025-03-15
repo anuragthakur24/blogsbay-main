@@ -21,4 +21,4 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - **Authentication:** JWT
  
 ## 🌍 Live Link  
-https://blogsbay.vercel.app/signup
+https://blogsbay.vercel.app
