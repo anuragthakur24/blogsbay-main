@@ -10,6 +10,7 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - ⚡ **Optimized performance** with **Cloudflare Workers** as the backend  
 - ✅ **Schema validation** using **Zod**  
 - 💾 **Efficient database handling** with **Prisma & Postgres** (with connection pooling)  
+- 📊 **Real-time monitoring** using **Prometheus**  
 - 🛠️ **Strongly typed codebase** with **TypeScript**  
 
 ## 🛠️ Tech Stack  
@@ -18,7 +19,11 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - **Validation & Type Inference:** Zod  
 - **ORM:** Prisma  
 - **Database:** Postgres  
-- **Authentication:** JWT
- 
+- **Authentication:** JWT  
+- **Monitoring:** Prometheus  
+
 ## 🌍 Live Link  
-https://blogsbay.vercel.app
+https://blogsbay.vercel.app  
+
+## 🌍 Live Monitoring Link  
+https://blogsbay.vercel.app/metrics  
