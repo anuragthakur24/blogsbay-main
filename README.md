@@ -23,7 +23,7 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - **Monitoring:** Prometheus  
 
 ## 🌍 Live Link  
-[BlogsBay](https://blogsbay.vercel.app)  
+🔗 [BlogsBay](https://blogsbay.vercel.app)  
 
-## 🌍 Live Monitoring Link  
-[Prometheus Metrics](https://blogsbay.vercel.app/metrics)    
+## 📊 Live Monitoring Link  
+📡 [Prometheus Metrics](https://blogsbay.vercel.app/metrics)  
