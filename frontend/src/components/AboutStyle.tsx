@@ -5,7 +5,7 @@ export const About = () => {
                 {/* Title with Logo */}
                 <h2 className="text-2xl font-semibold text-white flex items-center justify-center gap-1">
                     Discover <span className="text-indigo-400 ml-1">BlogsBay</span>
-                    <img src="/logo.jpg" alt="Logo" className="w-8 h-8 object-contain" />
+                    <img src="/logo.jpg" alt="Logo" className="w-9 h-9 object-contain" />
                 </h2>
 
                 {/* Shortened Description */}

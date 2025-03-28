@@ -10,6 +10,7 @@ import { Profile } from './pages/Profile'
 import { Settings } from './pages/Settings'
 import { DeleteAccount } from './components/Delete'
 import Home from './pages/Home'
+import { Metrics } from './pages/Metrics'
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/settings' element={<Settings />} />
         <Route path='/delete' element={<DeleteAccount />} />
+        <Route path='/metrics' element={<Metrics />} />
+        
       </Routes>
     </BrowserRouter>
   )

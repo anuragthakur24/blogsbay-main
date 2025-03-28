@@ -8,6 +8,7 @@ import bcrypt from "bcryptjs";
 
 export const userRoutes = new Hono<{ Bindings: { JWT_PASS: string, DATABASE_URL: string } }>();
 
+
 // Signup route - Handles new user registration
 userRoutes.post('/signup', async (c) => {
     const prisma = new PrismaClient({ datasourceUrl: c.env.DATABASE_URL }).$extends(withAccelerate());

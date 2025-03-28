@@ -7,6 +7,8 @@ import { createBlogInput } from "@anuragthakur24/medium-common-zod";
 // Create Hono app instance with custom typings for environment variables and userId in context
 export const blogRoutes = new Hono<{ Bindings: { JWT_PASS: string, DATABASE_URL: string }, Variables: { userId: string } }>();
 
+
+
 // Middleware for verifying JWT token
 blogRoutes.use("/*", async (c, next) => {
 

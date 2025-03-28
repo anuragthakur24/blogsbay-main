@@ -117,7 +117,7 @@ export default function HeroSection({ blogSliderRef }: HeroSectionProps) {
                 <div className="mt-4 md:mt-6 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
                     {/* Button 1: Start Writing */}
                     <Link
-                        to="/signin"
+                        to="/signup"
                         className="px-5 md:px-6 py-2 md:py-3 focus:hover:scale-100 bg-gradient-to-br hover:from-cyan-600 hover:to-indigo-600 from-cyan-600/90 to-indigo-600/90 rounded-lg md:rounded-xl text-white font-semibold text-base md:text-lg shadow-md transition-transform duration-300 hover:scale-110 flex items-center justify-center"
                     >
                         Start Writing

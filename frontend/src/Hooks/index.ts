@@ -329,3 +329,25 @@ export const useDeleteUser = () => {
 
     return { deleteUser, loading, error, success };
 };
+
+// Hook to show site metrics
+export const useMetrics = () => {
+    const [metrics, setMetrics] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+
+    useEffect(() => {
+        axios
+            .get(`${BACKEND_URL}/metrics`, { responseType: "text" })
+            .then((res) => {
+                setMetrics(res.data);
+                setLoading(false);
+            })
+            .catch(() => {
+                setError("Failed to load metrics");
+                setLoading(false);
+            });
+    }, []);
+
+    return { metrics, loading, error };
+};
