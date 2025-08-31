@@ -1,4 +1,4 @@
-# 📝 Blogging Website - [BlogsBay](https://blogsbay.vercel.app)  
+# 📝 Blogging Website · [BlogsBay](https://blogsbay.vercel.app)  
 
 A modern blogging platform where users can **create, read, update, and delete (CRUD)** their blogs while interacting with others through **likes and dislikes**. 
 
@@ -20,7 +20,7 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - **ORM:** Prisma  
 - **Database:** Postgres  
 - **Authentication:** JWT  
-- **Monitoring:** Prometheus
+- **Monitoring:** Prometheus  
 
 ## 🌍 Live Link  
 🔗 [BlogsBay](https://blogsbay.vercel.app)  
