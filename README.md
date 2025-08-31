@@ -1,5 +1,6 @@
 # 📝 Blogging Website 
-### [BlogsBay](https://blogsbay.vercel.app) 
+
+### 🌍 Live Link : [BlogsBay](https://blogsbay.vercel.app)  
 
 A modern blogging platform where users can **create, read, update, and delete (CRUD)** their blogs while interacting with others through **likes and dislikes**. 
 
@@ -22,9 +23,6 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - **Database:** Postgres  
 - **Authentication:** JWT  
 - **Monitoring:** Prometheus  
-
-## 🌍 Live Link  
-🔗 [BlogsBay](https://blogsbay.vercel.app)  
 
 ## 📊 Live Monitoring Link  
 📡 [Prometheus Metrics](https://blogsbay.vercel.app/metrics)  
