@@ -20,7 +20,10 @@ A modern blogging platform where users can **create, read, update, and delete (C
 - **ORM:** Prisma  
 - **Database:** Postgres  
 - **Authentication:** JWT  
-- **Monitoring:** Prometheus  
+- **Monitoring:** Prometheus
+
+## 🌍 Live Link  
+🔗 [BlogsBay](https://blogsbay.vercel.app)  
 
 ## 📊 Live Monitoring Link  
 📡 [Prometheus Metrics](https://blogsbay.vercel.app/metrics)  
