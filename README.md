@@ -1,4 +1,5 @@
-# 📝 Blogging Website 🔗 [BlogsBay](https://blogsbay.vercel.app) 
+# 📝 Blogging Website 
+### [BlogsBay](https://blogsbay.vercel.app) 
 
 A modern blogging platform where users can **create, read, update, and delete (CRUD)** their blogs while interacting with others through **likes and dislikes**. 
 
